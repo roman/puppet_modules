@@ -9,7 +9,9 @@ class git::config {
     logoutput => true,
     command => "git config --system alias.st status \
 && git config --system alias.co checkout \
+&& git config --system alias.ci commit \
 && git config --system alias.cp cherry-pick \
+&& git config --system color.ui auto \
 && echo \"$serial\" > $serialfile",
   }
 
