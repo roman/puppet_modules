@@ -5,7 +5,6 @@ class bash::update {
     path => ["/bin", "/usr/bin", "/usr/local/bin"], 
     user => $user,
     group => $user,
-    logoutput => true,
     require => Class["git::install"], 
   }
 

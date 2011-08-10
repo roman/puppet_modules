@@ -21,7 +21,6 @@ class leiningen::install {
     command => "wget $exec && chmod 755 lein && ./lein",
     creates => ["/home/$user/.bin/lein",  
                 "/home/$user/.lein"],
-    logoutput => true,
     require => [Class["java::install"],
                 File["create local bin"], 
                 Package["wget"]],
