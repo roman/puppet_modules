@@ -17,7 +17,7 @@ class bash::update {
 
   exec { "install bash":
     cwd => "/home/$user",
-    command => "git clone $repo .bash'",
+    command => "git clone $repo .bash",
     creates => "/home/$user/.bash",
   }
 
