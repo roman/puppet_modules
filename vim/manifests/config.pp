@@ -6,7 +6,6 @@ class vim::config {
     path => ["/bin", "/usr/bin", "/usr/local/bin"],
     user => $user,
     group => $user,
-    logoutput => true,
     require => Class["git::install", "vim::install"],
   }
 
