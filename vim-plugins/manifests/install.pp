@@ -24,6 +24,12 @@ class vim-plugin::install {
     onlyif => "[ -s /home/$user/.vim ]",
   }
 
+  exec { "update vim plugins":
+    cwd => "/home/$user/.vim",
+    command => "git submodule init && git submodule update",
+    require => Exec["update vim config"],
+  }
+
   # This will make tools like vimshell work
   exec { "create vimproc binary":
     cwd => "/home/$user/.vim/bundle/vimproc",
@@ -32,6 +38,7 @@ class vim-plugin::install {
       "Ubuntu" => "make -f make_gcc.mak",
     },
     creates => "/home/$user/.vim/bundle/vimproc/autoload/proc.so",
+    requires => Exec["install vim config", "update vim plugins"],
   }
 
   file { "/home/$user/.vimrc":
