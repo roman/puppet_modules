@@ -1,3 +1,3 @@
 class vim {
-  include vim::install, vim::config
+  include vim::install
 }
