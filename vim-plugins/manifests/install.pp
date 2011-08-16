@@ -1,4 +1,4 @@
-class vim-plugin::install {
+class vim-plugins::install {
   include git, vim
 
   $repo = "http://github.com/roman/vimconfig"
