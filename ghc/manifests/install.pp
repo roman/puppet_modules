@@ -5,7 +5,7 @@ class ghc::install {
 
     "Ubuntu": {
 
-      package { ["ghc", "ghc6-ghci", "ghc-dynamic"]:
+      package { ["ghc"]:
         ensure => installed,
         require => Class["apt::update"]
       }
