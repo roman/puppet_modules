@@ -1,3 +1,5 @@
-class bash {
-  include bash::update
+class bash($user="vagrant") {
+  class { "bash::update":
+    user => $user
+  }
 }

@@ -1,5 +1,5 @@
-class tmux::config {
-  file { "/home/vagrant/.tmux.conf":
+class tmux::config($user) {
+  file { "/home/$user/.tmux.conf":
     ensure  => present,
     source  => "puppet:///modules/tmux/tmux.conf",
     require => Class["tmux::install"],

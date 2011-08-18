@@ -1,3 +1,5 @@
-class vim-plugins {
-  include vim-plugins::install
+class vim-plugins($user="vagrant") {
+  class { "vim-plugins:install":
+    user => $user 
+  }
 }

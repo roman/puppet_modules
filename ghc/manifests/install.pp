@@ -1,7 +1,9 @@
 class ghc::install {
+
   case $operatingsystem: {
 
     "Ubuntu": {
+
       package { ["ghc", "ghc6-ghci", "ghc-dynamic"]:
         ensure => installed,
       }
@@ -13,4 +15,5 @@ class ghc::install {
     }
 
   }
+
 }

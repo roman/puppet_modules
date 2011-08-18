@@ -1,4 +1,4 @@
-class bash::update {
+class bash::update($user) {
   $repo = "http://github.com/roman/bashconfig"
 
   Exec { 
