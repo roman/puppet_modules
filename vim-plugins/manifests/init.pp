@@ -1,5 +1,5 @@
 class vim-plugins($user="vagrant") {
-  class { "vim-plugins:install":
+  class { "vim-plugins::install":
     user => $user 
   }
 }
