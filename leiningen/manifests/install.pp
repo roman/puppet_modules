@@ -1,4 +1,4 @@
-class leiningen::install {
+class leiningen::install($user) {
   $exec = "https://github.com/technomancy/leiningen/raw/stable/bin/lein"
 
   package { "wget":

@@ -1,3 +1,5 @@
-class leiningen {
-  include leiningen::install
+class leiningen($user="vagrant") {
+  class { "leiningen::install":
+    user => $user
+  }
 }
