@@ -1,4 +1,5 @@
 class ghc::install {
+  include apt
 
   case $operatingsystem: {
 
@@ -6,6 +7,7 @@ class ghc::install {
 
       package { ["ghc", "ghc6-ghci", "ghc-dynamic"]:
         ensure => installed,
+        require => Class["apt::update"]
       }
 
     }
