@@ -28,6 +28,7 @@ class vim-plugins::install {
     cwd => "/home/$user/.vim",
     command => "git submodule init && git submodule update",
     require => Exec["update vim config"],
+    timeout => 1200,
   }
 
   # This will make tools like vimshell work
@@ -38,7 +39,7 @@ class vim-plugins::install {
       "Ubuntu" => "make -f make_gcc.mak",
     },
     creates => "/home/$user/.vim/bundle/vimproc/autoload/proc.so",
-    requires => Exec["install vim config", "update vim plugins"],
+    require => Exec["install vim config", "update vim plugins"],
   }
 
   file { "/home/$user/.vimrc":
