@@ -1,7 +1,7 @@
 class ghc::install {
   include apt
 
-  case $operatingsystem: {
+  case $operatingsystem {
 
     "Ubuntu": {
 
