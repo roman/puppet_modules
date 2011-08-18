@@ -1,3 +1,6 @@
 class tmux($user="vagrant") {
-  include tmux::install, tmux::config
+  include tmux::install
+  class { tmux::config:
+    user => $user
+  }
 }
