@@ -5,7 +5,7 @@ class ghc::install {
 
     "Ubuntu": {
 
-      package { ["ghc"]:
+      package { ["ghc", "cabal-install"]:
         ensure => installed,
         require => Class["apt::update"]
       }
