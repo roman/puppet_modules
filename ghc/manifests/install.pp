@@ -5,10 +5,21 @@ class ghc::install {
 
     "Ubuntu": {
 
-      package { ["ghc", "cabal-install"]:
-        ensure => installed,
-        require => Class["apt::update"]
+      if versioncmp($operatingsystemrelease, '11.04') < 0 {
+        err("Can't install haskell on a release smaller than 11.04")
+
       }
+      else {
+        package { "build-essential":
+          ensure => installed,
+        }
+
+        package { ["haskell-platform"]:
+          ensure => installed,
+          require => [Package["build-essential"], Class["apt::update"]]
+        }
+      }
+
 
     }
 

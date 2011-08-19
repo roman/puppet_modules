@@ -11,6 +11,7 @@ class vim::install {
 
         vim::compile { "compile-and-install-vim": }
 
+      }
       else {
 
         package { ["vim", "vim-nox"]:
