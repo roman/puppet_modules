@@ -5,7 +5,7 @@ define apt::release_pinning () {
     cwd  => "/etc/apt/",
   }
 
-  exec { "add (*) for $name on apt/preferences":
+  exec { "add-(*)-for-$name-on-apt/preferences":
     command => "printf \"Package: *\nPin: release n=$name\nPin-Priority: -100\n\n\" | tee -a preferences",
     unless => "cat preferences | grep -A1 'Package: \*$' | grep 'Pin: release n=$name'",
     before => Class["apt::update"],
