@@ -4,7 +4,21 @@ class python-meetup::install {
     ensure => installed,
   }
 
-  package { ["virtualenv", "lxml", "httplib2", "github2", "tweepy", "redish"]:
+  package { ["libxml2-dev", "libxslt-dev", "python-dev", "python-setuptools"]:
+    ensure => installed,
+  }
+
+  package { "lxml":
+    ensure => installed,
+    provider => "pip",
+    require => Package["python-pip",
+                       "libxml2-dev",
+                       "libxslt-dev",
+                       "python-dev",
+                       "python-setuptools"],
+  }
+
+  package { ["virtualenv", "httplib2", "github2", "tweepy", "redish"]:
     ensure => installed,
     provider => "pip",
     require => Package["python-pip"],
