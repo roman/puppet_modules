@@ -1,7 +1,7 @@
 class leiningen::install($user) {
   $exec = "https://github.com/technomancy/leiningen/raw/stable/bin/lein"
 
-  package { "wget":
+  package { ["wget", "rlwrap"]:
     ensure => present,
   }
 
@@ -23,7 +23,7 @@ class leiningen::install($user) {
                 "/home/$user/.lein"],
     require => [Class["java::install"],
                 File["create local bin"], 
-                Package["wget"]],
+                Package["wget", "rlwrap"]],
   }
 
 }
