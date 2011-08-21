@@ -2,13 +2,13 @@ class redis::install {
 
   case $operatingsystem {
 
-    "Ubuntu" => {
+    "Ubuntu": {
         package {"redis-server":
           ensure => installed,
         }
     }
 
-    default => {
+    default: {
       err("Don't know how to install redis-server in this os")
     }
 
