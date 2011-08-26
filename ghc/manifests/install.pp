@@ -1,32 +1,39 @@
-class ghc::install {
+class ghc::install($compile) {
   include apt
 
-  case $operatingsystem {
+  if $compile {
+    ghc::compile { "compile-and-install-haskell-platform": }
+  }
+  else {
 
-    "Ubuntu": {
+    case $operatingsystem {
 
-      if versioncmp($operatingsystemrelease, '11.04') < 0 {
-        err("Can't install haskell on a release smaller than 11.04")
+      "Ubuntu": {
 
-      }
-      else {
-        package { "build-essential":
-          ensure => installed,
+        if versioncmp($operatingsystemrelease, '11.04') < 0 {
+          err("Can't install haskell on a release smaller than 11.04")
+
+        }
+        else {
+          package { "build-essential":
+            ensure => installed,
+          }
+
+          package { ["haskell-platform"]:
+            ensure => installed,
+            require => [Package["build-essential"], Class["apt::update"]]
+          }
         }
 
-        package { ["haskell-platform"]:
-          ensure => installed,
-          require => [Package["build-essential"], Class["apt::update"]]
-        }
+
       }
 
+      default: {
+        err("Don't know how to build ghc in your machine")
+        #ghc::compile { "compile-and-install-haskell-platform": }
+      }
 
     }
-
-    default: {
-      err("Don't know how to install ghc in this operating system")
-    }
-
   }
 
 }
