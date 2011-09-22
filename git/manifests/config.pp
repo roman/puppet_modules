@@ -2,11 +2,11 @@ class git::config {
   $serial = "2011_08_06"
   $serialfile = "/var/log/puppet/gitconfig.serial"
 
-  file { "/var/log/puppet": 
+  file { "/var/log/puppet":
     ensure => directory,
   }
 
-  exec { "setup git globals":
+  exec { "setup-git-globals":
     path    => ["/usr/bin", "/usr/local/bin"],
     command => "git config --system alias.st status \
 && git config --system alias.co checkout \
