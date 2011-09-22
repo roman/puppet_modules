@@ -1,11 +1,11 @@
 class leiningen::install($user) {
   $exec = "https://github.com/technomancy/leiningen/raw/stable/bin/lein"
 
-  package { ["wget", "rlwrap"]:
+  package { ["wget"]:
     ensure => present,
   }
 
-  file { "create local bin":
+  file { "create-local-bin":
     ensure => directory,
     path => "/home/$user/.bin",
     owner => $user,
@@ -19,11 +19,11 @@ class leiningen::install($user) {
     path => ["/bin", "/usr/bin", "/usr/local/bin"],
     cwd => "/home/$user/.bin",
     command => "wget $exec && chmod 755 lein && ./lein",
-    creates => ["/home/$user/.bin/lein",  
+    creates => ["/home/$user/.bin/lein",
                 "/home/$user/.lein"],
     require => [Class["java::install"],
-                File["create local bin"], 
-                Package["wget", "rlwrap"]],
+                File["create-local-bin"],
+                Package["wget"]],
   }
 
 }
