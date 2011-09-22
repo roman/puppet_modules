@@ -1,5 +1,4 @@
-class ghc::install($compile) {
-  include apt
+class ghc::install($compile=false) {
 
   if $compile {
     ghc::compile { "compile-and-install-haskell-platform": }
@@ -7,6 +6,7 @@ class ghc::install($compile) {
   else {
 
     case $operatingsystem {
+      include apt
 
       "Ubuntu": {
 
@@ -28,9 +28,17 @@ class ghc::install($compile) {
 
       }
 
+      "Archlinux": {
+        include pacman
+
+        package { "haskell-platform":
+          ensure => installed
+        }
+
+      }
+
       default: {
         err("Don't know how to build ghc in your machine")
-        #ghc::compile { "compile-and-install-haskell-platform": }
       }
 
     }
