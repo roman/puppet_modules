@@ -1,4 +1,6 @@
 class bash::update($user) {
+  include git
+
   $repo = "http://github.com/roman/bashconfig"
 
   Exec { 
@@ -28,4 +30,5 @@ class bash::update($user) {
     target => "/home/$user/.bash/bashrc",
     require => Exec["install-bash"],
   }
+
 }
