@@ -1,4 +1,4 @@
-class ghc::install($compile=false) {
+class ghc::install($compile) {
 
   if $compile {
     ghc::compile { "compile-and-install-haskell-platform": }
@@ -6,9 +6,9 @@ class ghc::install($compile=false) {
   else {
 
     case $operatingsystem {
-      include apt
 
       "Ubuntu": {
+        include apt
 
         if versioncmp($operatingsystemrelease, '11.04') < 0 {
           err("Can't install haskell on a release smaller than 11.04")
