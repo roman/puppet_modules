@@ -1,4 +1,6 @@
 class leiningen::install($user) {
+  include java
+
   $exec = "https://github.com/technomancy/leiningen/raw/stable/bin/lein"
 
   package { ["wget"]:
