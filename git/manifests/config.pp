@@ -1,23 +1,16 @@
-class git::config {
-  $serial = "2011_08_06"
-  $serialfile = "/var/log/puppet/gitconfig.serial"
+define git::config($user, $value) {
+  include git::install
 
-  file { "/var/log/puppet":
-    ensure => directory,
+  $section   = regsubst($name, "(\w+)\.(\w+)", "\[\1\]")
+  $attribute = regsubst($name, "(\w+)\.(\w+)", "\2 = $value")
+
+  exec { "git-config-$name":
+    path => ["/bin", "/usr/bin"],
+    cwd => "/home/$user/",
+    user => $user,
+    group => $user,
+    command => "git config --file /home/$user/.gitconfig $name $value",
+    unless  => "cat /home/$user/.gitconfig | grep -A5 \"$section\" | grep \"$attribute\"",
+    require => Class["git::install"],
   }
-
-  exec { "setup-git-globals":
-    path    => ["/usr/bin", "/usr/local/bin"],
-    command => "git config --system alias.st status \
-&& git config --system alias.co checkout \
-&& git config --system alias.ci commit \
-&& git config --system alias.cp cherry-pick \
-&& git config --system color.ui auto \
-&& echo \"$serial\" > $serialfile",
-    creates => $serialfile,
-    logoutput => true,
-    unless => "test \"`cat $serialfile 2> /dev/null`\" = \"$serial\"",
-    require => [Class["git::install"], File["/var/log/puppet"]],
-  }
-
 }

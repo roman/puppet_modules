@@ -22,7 +22,7 @@ class git::install {
 
     }
 
-    default {
+    default: {
       err("git module not supported for $operatingsystem")
     }
 
