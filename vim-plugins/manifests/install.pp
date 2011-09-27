@@ -1,5 +1,5 @@
 class vim-plugins::install($user) {
-  include git, vim
+  include git::install, vim::install
 
   $repo = "http://github.com/roman/vimconfig"
 
@@ -10,7 +10,7 @@ class vim-plugins::install($user) {
     require => Class["git::install", "vim::install"],
   }
 
-  exec { "install vim config":
+  exec { "install-vim-config":
     cwd => "/home/$user",
     command => "git clone $repo .vim --recursive",
     creates => "/home/$user/.vim",
@@ -18,28 +18,29 @@ class vim-plugins::install($user) {
     timeout => 1200,
   }
 
-  exec { "update vim config":
+  exec { "update-vim-config":
     cwd => "/home/$user/.vim",
     command => "git pull origin master",
     onlyif => "[ -s /home/$user/.vim ]",
   }
 
-  exec { "update vim plugins":
+  exec { "update-vim-plugins":
     cwd => "/home/$user/.vim",
     command => "git submodule init && git submodule update",
-    require => Exec["update vim config"],
+    require => Exec["update-vim-config"],
     timeout => 1200,
   }
 
   # This will make tools like vimshell work
-  exec { "create vimproc binary":
+  exec { "create-vimproc-binary":
     cwd => "/home/$user/.vim/bundle/vimproc",
     command => $operatingsystem ? {
-      "Darwin" => "make -f make_mac.mak",
-      "Ubuntu" => "make -f make_gcc.mak",
+      "Darwin"     => "make -f make_mac.mak",
+      "Ubuntu"     => "make -f make_gcc.mak",
+      "Archlinux"  => "make -f make_gcc.mak",
     },
     creates => "/home/$user/.vim/bundle/vimproc/autoload/proc.so",
-    require => Exec["install vim config", "update vim plugins"],
+    require => Exec["install-vim-config", "update-vim-plugins"],
   }
 
   file { "/home/$user/.vimrc":
@@ -47,7 +48,7 @@ class vim-plugins::install($user) {
     group => $user,
     ensure => link,
     target => "/home/$user/.vim/vimrc",
-    require => Exec["install vim config"],
+    require => Exec["install-vim-config"],
   }
 
 }
