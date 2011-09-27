@@ -1,33 +1,31 @@
-class vim::install {
-  include apt
+class vim::install($compile) {
 
-  case $operatingsystem {
+  if $compile {
 
-    # This is to install vim from packages, however
-    # this won't install ruby extensions, that are needed for some plugins
+    vim::compile { "compile-and-install-vim": }
 
-    "Ubuntu": {
-      if versioncmp($operatingsystemrelease, '11.04') < 0 {
+  }
+  else {
 
-        vim::compile { "compile-and-install-vim": }
+    case $operatingsystem {
 
-      }
-      else {
+      "Ubuntu": {
 
         package { ["vim", "vim-nox"]:
           ensure => latest,
-          require => Class["apt::update"]
+        }
+
+      } 
+
+      "Archlinux": {
+
+        package { "vim":
+          ensure => latest,
         }
 
       }
 
+    }
 
-    } # End Ubuntu
-
-    default: {
-
-      vim::compile { "compile-and-install-vim": }
-
-    } # end default
   }
 }
