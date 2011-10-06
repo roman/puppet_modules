@@ -1,3 +1,7 @@
-class neo4j {
-  include neo4j::install
+class neo4j($source=false) {
+
+  class { "neo4j::install":
+    source => $source
+  }
+
 }
