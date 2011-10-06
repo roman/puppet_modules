@@ -1,44 +1,6 @@
-class neo4j::install($user="vagrant", $source=false) {
+class neo4j::install($source=true) {
 
-  if !$source  {
-
-    case $operatingsystem {
-
-      "Archlinux": {
-        include pacman
-
-        $slf4j_url = "http://aur.archlinux.org/packages/sl/slf4j/slf4j.tar.gz"
-        $jakarta_url = "http://aur.archlinux.org/packages/ja/jakarta-commons-collections/jakarta-commons-collections.tar.gz"
-        $neo4j_url = "http://aur.archlinux.org/packages/ne/neo4j/neo4j.tar.gz"
-
-        pacman::aur { "jakarta-commons-collections":
-          user => $user,
-          resource_url => $jakarta_url 
-        }
-
-        pacman::aur { "slf4j":
-          user => $user,
-          resource_url => $slf4j_url
-        }
-
-        pacman::aur { "neo4j":
-          user => $user,
-          resource_url => $neo4j_url,
-          require => Pacman::Aur["jakarta-commons-collections", "slf4j"]
-        }
-
-
-      }
-
-      default: {
-        err("Don't know how to build on $operatingsystem")
-      }
-
-    }
-
-  }
-  else {
-
+  if $source { 
 
     Exec {
       cwd => "/tmp",
@@ -94,4 +56,8 @@ class neo4j::install($user="vagrant", $source=false) {
     }
 
   }
+  else {
+    err("There is no package for neo4j just yet")
+  }
+
 }
