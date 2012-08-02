@@ -1,8 +1,8 @@
 define git::config($user, $value) {
   include git::install
 
-  $section   = regsubst($name, "(\w+)\.(\w+)", "\[\1\]")
-  $attribute = regsubst($name, "(\w+)\.(\w+)", "\2 = ${value}")
+  $section   = regsubst($name, '(\w+)\.(\w+)', '\[\1\]')
+  $attribute = regsubst($name, '(\w+)\.(\w+)', '\2 = ${value}')
 
   exec { "git::config/git-config-${name}":
     path => ["/bin", "/usr/bin"],
