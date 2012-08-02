@@ -2,7 +2,8 @@ class apt::install {
 
   package { "apt::install/install-ppa-utilities":
     name => "python-software-properties",
-    ensure => latest
+    ensure => latest,
+    require => Class["apt::update"]
   }
 
   file { "apt::install/puppet-directory":
