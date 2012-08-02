@@ -10,17 +10,17 @@ class bash::update($user) {
     require => Class["git::install"], 
   }
 
-  exec { "install-bash":
+  exec { "bash::update/install-bash-config":
     cwd => "/home/$user",
     command => "git clone $repo .bash",
     creates => "/home/$user/.bash",
   }
 
-  exec { "update-bash":
+  exec { "bash::update/update-bash-config":
     cwd => "/home/$user/.bash",
     command => "git pull origin master",
     onlyif  => "[ -s /home/$user/.bash ]",
-    require => Exec["install-bash"],
+    require => Exec["bash::update/install-bash-config"],
   }
 
   file { "/home/$user/.bashrc":
@@ -28,7 +28,7 @@ class bash::update($user) {
     group => $user,
     ensure => link,
     target => "/home/$user/.bash/bashrc",
-    require => Exec["install-bash"],
+    require => Exec["bash::update/install-bash-config"],
   }
 
 }
