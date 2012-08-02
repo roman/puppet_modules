@@ -9,7 +9,7 @@ define git::config($user, $value) {
     cwd => "/home/$user/",
     user => $user,
     group => $user,
-    command => "git config --file /home/$user/.gitconfig ${name} ${value}",
+    command => "git config --file /home/$user/.gitconfig ${name} '${value}'",
     unless  => "cat /home/$user/.gitconfig | grep -A5 \"$section\" | grep \"$attribute\"",
     require => Class["git::install"],
   }
