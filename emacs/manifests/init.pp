@@ -1,9 +1,9 @@
 class emacs($user="vagrant",
             $config_repo_url="https://github.com/roman/emacs.d",
-            $version=24) {
+            $use_ppa=false) {
 
   class { "emacs::install":
-    version => $version
+    use_ppa => $use_ppa
   }
 
   class { "emacs::config":

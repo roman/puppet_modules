@@ -1,10 +1,10 @@
-class emacs::install($version) {
+class emacs::install($use_ppa) {
 
   case $operatingsystem {
 
     "Ubuntu": {
       include apt
-      if $version == 24 {
+      if $use_ppa {
         apt::ppa { "emacs_ppa":
           ppa_name => "ppa:cassou/emacs"
         }
@@ -15,7 +15,7 @@ class emacs::install($version) {
         }
       }
       else {
-        package { ["emacs-nox", "texinfo"]:
+        package { ["emacs23-nox", "texinfo"]:
           ensure => latest,
           require => Class["apt::update"]
         }
